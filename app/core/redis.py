@@ -21,8 +21,10 @@ class RedisHelper:
             db: Redis database number
 
         """
+        redis_host = os.getenv("REDIS_HOST", host)
+        redis_port = int(os.getenv("REDIS_PORT", str(port)))
         self.redis_client = Redis(
-            host=host, port=port, db=db, decode_responses=True, password=os.getenv("REDIS_PASSWORD")
+            host=redis_host, port=redis_port, db=db, decode_responses=True, password=os.getenv("REDIS_PASSWORD")
         )
 
     async def set(self, key: str, value: Any, *, expire: int | None = None, to_json: bool = False) -> bool:

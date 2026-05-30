@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: logic2byte/gym-biometric-server:latest
     container_name: gym-biometric-server
     restart: unless-stopped
     ports:
