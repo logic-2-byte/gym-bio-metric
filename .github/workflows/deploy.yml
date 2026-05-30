@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "docker-compose.prod.yml"
-          target: "~/"
+          target: "~/gym-biometric-server/"
 
       - name: Deploy to VM
         uses: appleboy/ssh-action@v1
@@ -55,6 +55,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           envs: ENV_CONTENT
           script: |
+            mkdir -p ~/gym-biometric-server
+            cd ~/gym-biometric-server
+
             echo "Updating docker-compose.yml..."
             if [ -f "docker-compose.yml" ] && [ ! -L "docker-compose.yml" ]; then
               mv docker-compose.yml docker-compose.yml.bak || true
