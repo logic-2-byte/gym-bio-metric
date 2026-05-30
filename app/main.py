@@ -7,6 +7,7 @@ from app.core.manager import lifespan
 from app.core.redis import RedisHelper
 from app.core.settings import Settings
 from app.router.base import router as base_router
+from app.router.iclock import router as iclock_router
 
 _settings = Settings()
 
@@ -15,6 +16,7 @@ app = FastAPI(lifespan=lifespan, debug=_settings.debug, docs_url="/api/docs")
 setup_logger(_settings.debug)
 
 app.include_router(base_router)
+app.include_router(iclock_router)
 
 client = TestClient(app)
 
