@@ -4,7 +4,7 @@ from typing import Annotated, Any
 
 from fastapi import Depends
 from loguru import logger
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy.ext.asyncio import (
     AsyncConnection,
     AsyncEngine,
@@ -23,11 +23,9 @@ class DBSettings(BaseSettings):
     db_user: str = ""
     db_password: str = ""
     db_host: str = "localhost"
-    db_port: int = 5433
+    db_port: int = 5432
 
-    class config:  # noqa: N801
-        env_file = ".env"
-        extra = "ignore"
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property
     def db_url(self) -> str:
