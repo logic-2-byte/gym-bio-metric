@@ -9,3 +9,10 @@ services:
       - "8000:8000"
     env_file:
       - .env
+    networks:
+      - gym-network
+
+networks:
+  gym-network:
+    external: true
+    name: logic2bytes_gym-network
