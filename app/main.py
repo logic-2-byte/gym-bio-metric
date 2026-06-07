@@ -28,6 +28,12 @@ app.include_router(base_router)
 app.include_router(iclock_router)
 
 
+@app.get("/")
+async def root() -> dict[str, bool]:
+    print("ROOT HIT")
+    return {"ok": True}
+
+
 @app.api_route("/{path:path}", methods=["GET", "POST"])
 async def catch_all(path: str, request: Request) -> str:
     body = await request.body()
