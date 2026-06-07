@@ -40,7 +40,9 @@ class DBSettings(BaseSettings):
 
     @property
     def db_url(self) -> str:
-        return f"postgresql+asyncpg://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
+        import urllib.parse
+        safe_password = urllib.parse.quote_plus(self.db_password)
+        return f"postgresql+asyncpg://{self.db_user}:{safe_password}@{self.db_host}:{self.db_port}/{self.db_name}"
 
 
 _DBSettings = DBSettings()
