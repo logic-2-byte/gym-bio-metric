@@ -4,6 +4,7 @@ from typing import Annotated, Any
 
 from fastapi import Depends
 from loguru import logger
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy.ext.asyncio import (
     AsyncConnection,
@@ -24,6 +25,16 @@ class DBSettings(BaseSettings):
     db_password: str = ""
     db_host: str = "localhost"
     db_port: int = 5432
+
+    @field_validator("db_port", mode="before")
+    @classmethod
+    def parse_db_port(cls, v: Any) -> int:
+        if v == "" or v is None:
+            return 5432
+        try:
+            return int(v)
+        except (ValueError, TypeError):
+            return 5432
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
