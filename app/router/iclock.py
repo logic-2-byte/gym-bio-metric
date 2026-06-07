@@ -8,15 +8,14 @@ async def getrequest() -> str:
     return "OK"
 
 
-@router.get("/iclock/cdata")
-async def cdata() -> str:
-    return "OK"
+@router.api_route("/iclock/cdata", methods=["GET", "POST"])
+async def cdata(request: Request) -> str:
+    print("REQUEST RECEIVED")
+    print("URL:", request.url)
 
-
-@router.post("/iclock/cdata")
-async def upload(request: Request) -> str:
     body = await request.body()
-    print(body.decode())
+    print("BODY:", body.decode(errors="ignore"))
+
     return "OK"
 
 
